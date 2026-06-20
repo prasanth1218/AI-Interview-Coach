@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-evaluation_prompt = ChatPromptTemplate.from_template(
+evaluator_prompt = ChatPromptTemplate.from_template(
     """
     You are a senior interviewer.
 
