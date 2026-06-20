@@ -1,21 +1,27 @@
+import os
+import streamlit as st
+
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 
-from prompts.evaluator_prompt import evaluation_prompt
-from utils.parser import InterviewEvaluation
+from prompts.evaluator_prompt import evaluator_prompt
+from utils.parser import parser
 
 load_dotenv()
 
-llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
-    temperature=0
+groq_api_key = (
+    os.getenv("GROQ_API_KEY")
+    or st.secrets["GROQ_API_KEY"]
 )
 
-structured_llm = llm.with_structured_output(
-    InterviewEvaluation
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    temperature=0.2,
+    api_key=groq_api_key
 )
 
 evaluation_chain = (
-    evaluation_prompt
-    | structured_llm
+    evaluator_prompt
+    | llm
+    | parser
 )
