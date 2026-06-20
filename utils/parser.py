@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from langchain_core.output_parsers import PydanticOutputParser
 
 
 class InterviewEvaluation(BaseModel):
@@ -12,3 +13,8 @@ class InterviewEvaluation(BaseModel):
     weaknesses: str
 
     improved_answer: str
+
+
+parser = PydanticOutputParser(
+    pydantic_object=InterviewEvaluation
+)

@@ -1,4 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
+from utils.parser import parser
 
 evaluator_prompt = ChatPromptTemplate.from_template(
     """
@@ -12,11 +13,8 @@ evaluator_prompt = ChatPromptTemplate.from_template(
 
     Evaluate the answer.
 
-    Provide:
-
-    1. Score out of 10
-    2. Strengths
-    3. Weaknesses
-    4. Improved Answer
+    {format_instructions}
     """
+).partial(
+    format_instructions=parser.get_format_instructions()
 )
